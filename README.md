@@ -1,4 +1,5 @@
 # System TFT
+<<<<<<< HEAD
 
 ## Descripción
 System TFT es una plataforma diseñada para la gestión de usuarios, trading automatizado y administración de IA.
@@ -45,3 +46,5 @@ System TFT es una plataforma diseñada para la gestión de usuarios, trading aut
 3. Haz commit de tus cambios (`git commit -m 'Agrega nueva funcionalidad'`).
 4. Haz push a la rama (`git push origin feature/nueva-funcionalidad`).
 5. Abre un Pull Request.
+=======
+>>>>>>> 9a8f5c0d6153a245c7964b186c042be4cbf64a98
