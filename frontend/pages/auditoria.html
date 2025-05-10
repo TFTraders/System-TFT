@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditoría - Training for Traders</title>
+  <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #081625; color: #ffffff; margin: 0; padding: 0; }
+    .dashboard { padding: 2rem; }
+    .card { background-color: #1a202c; border: 1px solid #2b3440; border-radius: 10px; margin-bottom: 1rem; }
+    .card h5 { color: #750e25; }
+    .btn-primary, .btn-danger { margin-top: 1rem; }
+    #manager-window {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background-color: #1a202c;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #manager-header {
+      background-color: #750e25;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #manager-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">Training for Traders</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">Auditoría</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    <h2>Auditoría</h2>
+
+    <!-- Auditoría PRO -->
+    <div class="card">
+      <div class="card-body">
+        <h5>Auditoría PRO</h5>
+        <p>Accede con tu usuario y contraseña para obtener acceso completo al registro emocional y al Manager de Trading.</p>
+        <a href="login.html" class="btn btn-primary">Acceder a Auditoría PRO</a>
+      </div>
+    </div>
+
+    <!-- Auditoría Gratuita -->
+    <div class="card">
+      <div class="card-body">
+        <h5>Auditoría Gratuita</h5>
+        <form id="auditoriaForm">
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input type="email" id="correo" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="idCuenta" class="form-label">ID de la Cuenta</label>
+            <input type="text" id="idCuenta" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="passwordCuenta" class="form-label">Password</label>
+            <input type="password" id="passwordCuenta" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="servidorCuenta" class="form-label">Servidor</label>
+            <input type="text" id="servidorCuenta" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar para Auditoría</button>
+          <button type="button" id="eliminarDatos" class="btn btn-danger">Eliminar Datos</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Gráfico de métricas -->
+    <div class="card">
+      <div class="card-body">
+        <h5>Métricas de Auditoría</h5>
+        <canvas id="graficoAuditoria"></canvas>
+      </div>
+    </div>
+  </main>
+
+  <!-- Manager de Trading -->
+  <div id="manager-window">
+    <div id="manager-header">
+      <strong>Manager de Trading</strong>
+      <i class="fas fa-times" id="manager-close"></i>
+    </div>
+    <div id="manager-body">
+      <p>El Manager de Trading está aquí para ayudarte a mantenerte en tu plan de trading.</p>
+      <ul>
+        <li>Consejo 1: Practica mindfulness antes de operar.</li>
+        <li>Consejo 2: Revisa tu plan de trading.</li>
+        <li>Consejo 3: Evita operar impulsivamente.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center py-4">
+    <p>&copy; 2025 Training for Traders</p>
+  </footer>
+
+  <script>
+    // Funcionalidad para el formulario de auditoría gratuita
+    const auditoriaForm = document.getElementById('auditoriaForm');
+    const eliminarDatosBtn = document.getElementById('eliminarDatos');
+
+    auditoriaForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const correo = document.getElementById('correo').value;
+      const idCuenta = document.getElementById('idCuenta').value;
+      const passwordCuenta = document.getElementById('passwordCuenta').value;
+      const servidorCuenta = document.getElementById('servidorCuenta').value;
+
+      // Guardar correo para campañas de email
+      await fetch('/api/auditoria/guardar-correo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo }),
+      });
+
+      // Enviar credenciales para auditoría
+      await fetch('/api/auditoria/auditar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo, idCuenta, passwordCuenta, servidorCuenta }),
+      });
+
+      alert('Datos enviados para auditoría.');
+      auditoriaForm.reset();
+    });
+
+    eliminarDatosBtn.addEventListener('click', async () => {
+      const correo = document.getElementById('correo').value;
+
+      if (!correo) {
+        alert('Por favor, ingresa tu correo para eliminar los datos.');
+        return;
+      }
+
+      await fetch('/api/auditoria/eliminar-datos', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo }),
+      });
+
+      alert('Datos eliminados correctamente.');
+      auditoriaForm.reset();
+    });
+
+    // Funcionalidad para el Manager de Trading
+    const managerWindow = document.getElementById('manager-window');
+    const managerClose = document.getElementById('manager-close');
+
+    managerClose.addEventListener('click', () => {
+      managerWindow.style.display = 'none';
+    });
+
+    // Gráfico de métricas de auditoría
+    const ctx = document.getElementById('graficoAuditoria').getContext('2d');
+    const graficoAuditoria = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['ROI', 'Drawdown', 'Winrate'],
+        datasets: [{
+          label: 'Métricas de Auditoría',
+          data: [15, 5, 60], // Datos simulados
+          backgroundColor: ['#007bff', '#dc3545', '#28a745'],
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+      },
+    });
+  </script>
+</body>
+</html>

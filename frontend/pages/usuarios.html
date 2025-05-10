@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .dashboard {
+            padding: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            background: #750e25;
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        footer {
+            background: #1e1e1e;
+            color: #aaa;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Gestión de Usuarios</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <h2 class="text-center mb-4">Gestión de Usuarios</h2>
+        <div class="row">
+            <!-- Lista de Usuarios -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Lista de Usuarios</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Aquí puedes gestionar los usuarios del sistema.</p>
+                        <!-- Contenido dinámico -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario para Agregar Usuario -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Agregar Usuario</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addUserForm">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">Nombre</label>
+                                <input type="text" id="firstName" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Apellido</label>
+                                <input type="text" id="lastName" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Clave</label>
+                                <input type="password" id="password" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Rol</label>
+                                <select id="role" class="form-select" required>
+                                    <option value="">Seleccionar Rol</option>
+                                    <option value="admin">Administrador</option>
+                                    <option value="alumno">Alumno</option>
+                                    <option value="inversor">Inversor</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="matricula" class="form-label">Tipo de Matrícula</label>
+                                <select id="matricula" class="form-select" required>
+                                    <option value="">Seleccionar Matrícula</option>
+                                    <option value="1mes">1 Mes</option>
+                                    <option value="6meses">6 Meses</option>
+                                    <option value="12meses">12 Meses</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Fecha de Inicio</label>
+                                <input type="date" id="startDate" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Fecha de Culminación</label>
+                                <input type="date" id="endDate" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pensumPhase" class="form-label">Fase del Pensum</label>
+                                <input type="text" id="pensumPhase" class="form-control" placeholder="Ejemplo: Módulo Básico / Imbalances" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Training for Traders</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario - Training for Traders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " rel="stylesheet">
+    <!-- FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar @6.1.8/index.global.min.js"></script>
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        .dashboard {
+            padding: 1rem;
+        }
+
+        #calendar {
+            background: #2c2c2c;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .fc-header-toolbar {
+            background: #1a202c;
+            border-bottom: 1px solid #333;
+        }
+
+        .fc-button-primary {
+            background-color: #750e25 !important;
+            border-color: #750e25 !important;
+        }
+
+        .fc-daygrid-event {
+            background-color: #750e25;
+            color: #fff;
+            border: none;
+        }
+
+        .modal-content {
+            background: #2c2c2c;
+            color: #fff;
+        }
+
+        .modal-header {
+            background: #750e25;
+            color: #fff;
+        }
+
+        .form-control {
+            background: #1a202c;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        footer {
+            background: #1e1e1e;
+            color: #aaa;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 0.5rem;
+            }
+
+            #calendar {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">TFT - Calendario</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="notificaciones.html">Notificaciones</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Calendario</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <h2 class="text-center mb-4">Calendario de Clases</h2>
+        <div id="calendar"></div>
+    </main>
+
+    <!-- Modal para editar evento -->
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">Editar Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="eventForm">
+                        <div class="mb-3">
+                            <label for="eventTitle" class="form-label">Título del Evento</label>
+                            <input type="text" class="form-control" id="eventTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventType" class="form-label">Tipo de Clase</label>
+                            <select class="form-select" id="eventType" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Clase Básica">Clase Básica</option>
+                                <option value="Clase Avanzada">Clase Avanzada</option>
+                                <option value="Revisión de Tareas">Revisión de Tareas</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventLink" class="form-label">Enlace de Clase</label>
+                            <input type="url" class="form-control" id="eventLink" placeholder="https://zoom.us/example ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventDate" class="form-label">Fecha y Hora</label>
+                            <input type="datetime-local" class="form-control" id="eventDate" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" onclick="saveEvent()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Training for Traders</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,listWeek'
+                },
+                editable: true,
+                selectable: true,
+                events: [
+                    {
+                        title: 'Clase Básica de Trading',
+                        start: '2025-01-10T10:00',
+                        end: '2025-01-10T11:30',
+                        url: 'https://zoom.us/example ',
+                        extendedProps: {
+                            type: 'Clase Básica',
+                            link: 'https://zoom.us/example '
+                        }
+                    },
+                    {
+                        title: 'Clase Avanzada de Trading',
+                        start: '2025-01-15T14:00',
+                        end: '2025-01-15T16:00',
+                        url: 'https://zoom.us/example2 ',
+                        extendedProps: {
+                            type: 'Clase Avanzada',
+                            link: 'https://zoom.us/example2 '
+                        }
+                    },
+                    {
+                        title: 'Revisión de Tareas',
+                        start: '2025-01-12T15:00',
+                        end: '2025-01-12T16:00',
+                        url: 'https://zoom.us/example ',
+                        extendedProps: {
+                            type: 'Revisión de Tareas',
+                            link: 'https://zoom.us/example '
+                        }
+                    }
+                ],
+                eventContent: function (info) {
+                    return {
+                        html: `<strong>${info.event.title}</strong><br>
+                               <small>${info.timeText}</small>`
+                    };
+                },
+                eventClick: function (info) {
+                    if (!isAdmin()) {
+                        alert("Solo el administrador puede editar.");
+                        return false;
+                    }
+                    showEditModal(info.event);
+                },
+                dateClick: function (info) {
+                    if (!isAdmin()) {
+                        alert("Solo el administrador puede agregar eventos.");
+                        return false;
+                    }
+                    addEvent(info.dateStr);
+                }
+            });
+            calendar.render();
+        });
+
+        function isAdmin() {
+            // Simulación de comprobación de rol de administrador
+            // En producción, esto debe validarse contra sesión o backend
+            return true; // Cambiar a false si no es administrador
+        }
+
+        function showEditModal(event) {
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventType').value = event.extendedProps.type;
+            document.getElementById('eventLink').value = event.extendedProps.link;
+            document.getElementById('eventDate').value = event.start.toISOString().slice(0, 16);
+
+            const modal = new bootstrap.Modal(document.getElementById('eventModal'));
+            modal.show();
+        }
+
+        function saveEvent() {
+            const title = document.getElementById('eventTitle').value;
+            const type = document.getElementById('eventType').value;
+            const link = document.getElementById('eventLink').value;
+            const date = document.getElementById('eventDate').value;
+
+            const event = calendar.getEvents()[0]; // Solo se edita el primer evento por ahora
+
+            if (event) {
+                event.setProp('title', title);
+                event.setExtendedProp('type', type);
+                event.setExtendedProp('link', link);
+                event.setStart(date);
+            }
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
+            modal.hide();
+        }
+
+        function addEvent(dateStr) {
+            const title = prompt("Nuevo evento:");
+            if (title) {
+                const newEvent = {
+                    title: title,
+                    start: dateStr,
+                    allDay: true
+                };
+                calendar.addEvent(newEvent);
+            }
+        }
+    </script>
+</body>
+</html>

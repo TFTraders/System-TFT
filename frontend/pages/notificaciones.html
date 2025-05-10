@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones - Training for Traders</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #1e1e1e; color: #fff; }
+        .dashboard { padding: 2rem; }
+        .card { background: #2c2c2c; border: none; }
+        .card-body { padding: 1rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="Admin.html">TFT - Notificaciones</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <h2>Notificaciones</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5>Enviar Notificación</h5>
+                <textarea id="mensajeNotificacion" class="form-control" rows="3" placeholder="Escribe tu notificación aquí..."></textarea>
+                <button id="enviarNotificacion" class="btn btn-primary mt-2">Enviar Notificación</button>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5>Programar Notificación</h5>
+                <textarea id="mensajeProgramado" class="form-control" rows="3" placeholder="Escribe tu notificación aquí..."></textarea>
+                <label for="fechaProgramada" class="form-label mt-2">Fecha y Hora</label>
+                <input type="datetime-local" id="fechaProgramada" class="form-control">
+                <button id="programarNotificacion" class="btn btn-warning mt-2">Programar Notificación</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Training for Traders</p>
+    </footer>
+
+    <script>
+        document.getElementById('enviarNotificacion').addEventListener('click', () => {
+            const mensaje = document.getElementById('mensajeNotificacion').value;
+            if (!mensaje) {
+                alert('Por favor, escribe una notificación antes de enviarla.');
+                return;
+            }
+            alert('Notificación enviada: ' + mensaje);
+        });
+
+        document.getElementById('programarNotificacion').addEventListener('click', () => {
+            const mensaje = document.getElementById('mensajeProgramado').value;
+            const fecha = document.getElementById('fechaProgramada').value;
+            if (!mensaje || !fecha) {
+                alert('Por favor, completa todos los campos antes de programar la notificación.');
+                return;
+            }
+            alert(`Notificación programada: "${mensaje}" para el ${fecha}`);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFT - Panel de Administración</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css ">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+    <style>
+        body { background: #1e1e1e; color: #fff; }
+        .dashboard { padding: 2rem; }
+        .card { background: #2c2c2c; border: none; }
+        .card-body { padding: 1rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TFT - Panel Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="usuarios.html">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="auditoria.html">Auditoría</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ia.html">IA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="bot-trading.html">Bot Trading</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <h2>Panel de Administración</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Control del Bot</h5>
+                        <p>Activa, pausa o reinicia el bot BOV desde aquí.</p>
+                        <a href="bot-trading.html" class="btn btn-primary">Control del Bot</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Gestión de Usuarios</h5>
+                        <p>Asigna planes, edita permisos, gestionar usuarios.</p>
+                        <a href="usuarios.html" class="btn btn-success">Gestionar Usuarios</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Entrenamiento de IAs</h5>
+                        <p>Sube documentos, selecciona IA, y entrena modelos manualmente.</p>
+                        <a href="ia.html" class="btn btn-info">Entrenar IA</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Notificaciones</h5>
+                        <p>Envía notificaciones a los alumnos y programa notificaciones automáticas.</p>
+                        <a href="notificaciones.html" class="btn btn-warning">Ir a Notificaciones</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Calendario</h5>
+                        <p>Agrega reuniones, enlaces de clases y etiquetas de tipo de clase.</p>
+                        <a href="calendario.html" class="btn btn-secondary">Ir al Calendario</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Training for Traders</p>
+    </footer>
+</body>
+</html>

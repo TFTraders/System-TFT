@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración del Bot - Training for Traders</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #081625;
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #750e25;
+      margin-bottom: 20px;
+    }
+
+    .bot-card {
+      background: #1a202c;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bot-card h4 {
+      color: #750e25;
+    }
+
+    .btn-primary {
+      background-color: #750e25;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #ffffff;
+      color: #750e25;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #ffffff;
+      color: #dc3545;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #ffffff;
+      color: #28a745;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      border: none;
+    }
+
+    .btn-warning:hover {
+      background-color: #ffffff;
+      color: #ffc107;
+    }
+
+    .lock-icon {
+      cursor: pointer;
+      color: #ffffff;
+    }
+
+    .lock-icon.locked {
+      color: #dc3545;
+    }
+
+    .alert-box {
+      background: #1a202c;
+      border-left: 5px solid #750e25;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    .alert-box h5 {
+      color: #750e25;
+    }
+
+    .alert-box p {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Configuración del Bot Automatizado</h1>
+
+    <!-- Cuadro de Alerta -->
+    <div id="alertBox" class="alert-box">
+      <h5>Estado del Bot</h5>
+      <p id="botStatus">El bot está funcional.</p>
+    </div>
+
+    <!-- Crear y Gestionar Bots -->
+    <div class="section">
+      <h2>Gestión de Bots</h2>
+      <button class="btn btn-primary mb-3" onclick="createBot()">Crear Nuevo Bot</button>
+      <button class="btn btn-danger mb-3" onclick="deleteSelectedBots()">Eliminar Seleccionados</button>
+      <div id="botList" class="row">
+        <!-- Los bots se cargarán dinámicamente -->
+      </div>
+    </div>
+
+    <!-- Comandos por Texto o Voz -->
+    <div class="section">
+      <h2>Comandos por Texto o Voz</h2>
+      <textarea id="commandInput" class="form-control mb-3" rows="3" placeholder="Escribe tu comando aquí..."></textarea>
+      <button class="btn btn-primary mb-3" onclick="processCommand()">Enviar Comando</button>
+      <button class="btn btn-warning mb-3" onclick="startVoiceRecognition()">Dictado por Voz</button>
+      <div id="checklist" class="mt-3">
+        <!-- La estrategia en formato checklist se cargará aquí -->
+      </div>
+      <button id="authorizeButton" class="btn btn-success mt-3 d-none" onclick="authorizeOperation()">Autorizar Operativa</button>
+    </div>
+  </div>
+
+  <script>
+    const botList = document.getElementById('botList');
+    const botStatus = document.getElementById('botStatus');
+    const authorizeButton = document.getElementById('authorizeButton');
+    let bots = [];
+
+    function createBot() {
+      const botId = `bot-${Date.now()}`;
+      bots.push({ id: botId, name: `Bot ${bots.length + 1}`, locked: false, status: 'detenido', copyActive: false });
+      renderBots();
+    }
+
+    function renderBots() {
+      botList.innerHTML = '';
+      bots.forEach(bot => {
+        const botCard = document.createElement('div');
+        botCard.className = 'col-md-4';
+        botCard.innerHTML = `
+          <div class="bot-card">
+            <h4>${bot.name}</h4>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <button class="btn btn-success" onclick="startBot('${bot.id}')" ${bot.status === 'activo' ? 'disabled' : ''}>Iniciar</button>
+              <button class="btn btn-warning" onclick="pauseBot('${bot.id}')" ${bot.status === 'detenido' ? 'disabled' : ''}>Pausar</button>
+              <button class="btn btn-danger" onclick="stopBot('${bot.id}')" ${bot.status === 'detenido' ? 'disabled' : ''}>Detener</button>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <button class="btn btn-primary" onclick="toggleCopy('${bot.id}')">${bot.copyActive ? 'Desactivar Copy' : 'Activar Copy'}</button>
+              <button class="btn btn-danger" onclick="deleteBot('${bot.id}')" ${bot.locked ? 'disabled' : ''}>Eliminar</button>
+              <i class="fas fa-lock${bot.locked ? ' locked' : ''} lock-icon" onclick="toggleLock('${bot.id}')"></i>
+            </div>
+          </div>
+        `;
+        botList.appendChild(botCard);
+      });
+    }
+
+    function startBot(botId) {
+      const bot = bots.find(bot => bot.id === botId);
+      if (bot) {
+        bot.status = 'activo';
+        botStatus.textContent = `El bot ${bot.name} está en funcionamiento.`;
+        renderBots();
+      }
+    }
+
+    function pauseBot(botId) {
+      const bot = bots.find(bot => bot.id === botId);
+      if (bot) {
+        bot.status = 'pausado';
+        botStatus.textContent = `El bot ${bot.name} está pausado.`;
+        renderBots();
+      }
+    }
+
+    function stopBot(botId) {
+      const bot = bots.find(bot => bot.id === botId);
+      if (bot) {
+        bot.status = 'detenido';
+        botStatus.textContent = `El bot ${bot.name} ha sido detenido.`;
+        renderBots();
+      }
+    }
+
+    function toggleCopy(botId) {
+      const bot = bots.find(bot => bot.id === botId);
+      if (bot) {
+        bot.copyActive = !bot.copyActive;
+        botStatus.textContent = `El copy trading para ${bot.name} ha sido ${bot.copyActive ? 'activado' : 'desactivado'}.`;
+        renderBots();
+      }
+    }
+
+    function deleteBot(botId) {
+      bots = bots.filter(bot => bot.id !== botId);
+      botStatus.textContent = `El bot ha sido eliminado.`;
+      renderBots();
+    }
+
+    function toggleLock(botId) {
+      const bot = bots.find(bot => bot.id === botId);
+      if (bot) {
+        bot.locked = !bot.locked;
+        renderBots();
+      }
+    }
+
+    function deleteSelectedBots() {
+      bots = bots.filter(bot => bot.locked);
+      botStatus.textContent = `Los bots desbloqueados han sido eliminados.`;
+      renderBots();
+    }
+
+    function selectBot(botId) {
+      alert(`Bot ${botId} seleccionado para operar.`);
+    }
+
+    function processCommand() {
+      const command = document.getElementById('commandInput').value.trim();
+      if (!command) {
+        alert('Por favor, escribe un comando.');
+        return;
+      }
+
+      // Simulación de procesamiento del comando
+      const checklist = `
+        <ul>
+          <li><input type="checkbox"> Configurar estrategia de entrada</li>
+          <li><input type="checkbox"> Configurar estrategia de salida</li>
+          <li><input type="checkbox"> Configurar gestión de riesgo</li>
+        </ul>
+      `;
+      document.getElementById('checklist').innerHTML = `<h4>Estrategia Generada:</h4>${checklist}`;
+      authorizeButton.classList.remove('d-none');
+    }
+
+    function authorizeOperation() {
+      alert('Operativa autorizada. El bot comenzará a operar según la estrategia aprobada.');
+      authorizeButton.classList.add('d-none');
+    }
+
+    function startVoiceRecognition() {
+      alert('Función de dictado por voz iniciada. Por favor, habla claramente.');
+      // Aquí se puede integrar la API de reconocimiento de voz
+    }
+
+    // Simulación de alertas del bot
+    setTimeout(() => {
+      botStatus.textContent = 'Error: El bot detectó un problema con la estrategia configurada.';
+    }, 5000);
+  </script>
+</body>
+</html>

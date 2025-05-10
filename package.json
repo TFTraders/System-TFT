@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "pdf-parse": "^1.1.1",
+    "tesseract.js": "^6.0.1"
+  },
+  "scripts": {
+    "build": "echo 'No build process defined yet'",
+    "start": "node backend/app.js",
+    "test": "echo 'No tests defined yet'",
+    "dev": "nodemon backend/app.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  }
+}

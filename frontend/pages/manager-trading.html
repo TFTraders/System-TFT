@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager de Trading - Asesor Personal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #081625;
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #750e25;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #1a202c;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background-color: #750e25;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #ffffff;
+      color: #750e25;
+    }
+
+    .notification {
+      background: #2c2c2c;
+      border-left: 5px solid #750e25;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+
+    .notification h5 {
+      color: #750e25;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Manager de Trading</h1>
+
+    <!-- Métricas del Trader -->
+    <div class="section">
+      <h2>Métricas del Trader</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <h4>ROI</h4>
+            <p id="roi">15%</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <h4>Drawdown</h4>
+            <p id="drawdown">5%</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <h4>Winrate</h4>
+            <p id="winrate">60%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consejos y Notificaciones -->
+    <div class="section">
+      <h2>Consejos y Notificaciones</h2>
+      <div id="notifications">
+        <!-- Notificaciones se cargarán dinámicamente -->
+      </div>
+    </div>
+
+    <!-- Historial de Operaciones -->
+    <div class="section">
+      <h2>Historial de Operaciones</h2>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Par</th>
+            <th>Resultado</th>
+            <th>Ganancia/Pérdida</th>
+          </tr>
+        </thead>
+        <tbody id="operationHistory">
+          <!-- Operaciones se cargarán dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cierre de Sesión -->
+    <div class="section text-center">
+      <button id="closeSessionBtn" class="btn btn-primary">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      loadMetrics();
+      loadNotifications();
+      loadOperationHistory();
+    });
+
+    function loadMetrics() {
+      // Simulación de datos de métricas
+      const metrics = {
+        roi: '15%',
+        drawdown: '5%',
+        winrate: '60%',
+      };
+
+      document.getElementById('roi').textContent = metrics.roi;
+      document.getElementById('drawdown').textContent = metrics.drawdown;
+      document.getElementById('winrate').textContent = metrics.winrate;
+    }
+
+    function loadNotifications() {
+      // Simulación de notificaciones
+      const notifications = [
+        { title: 'Mejora tu estrategia de salida', message: 'Tu drawdown es alto. Considera ajustar tus stop-loss.' },
+        { title: 'Revisión de operaciones', message: 'Tu winrate ha bajado un 5% esta semana. Revisa tus últimas operaciones.' },
+        { title: 'Aprendizaje sugerido', message: 'Te recomendamos estudiar sobre gestión de riesgo avanzada.' },
+      ];
+
+      const notificationsContainer = document.getElementById('notifications');
+      notificationsContainer.innerHTML = '';
+      notifications.forEach(notification => {
+        const notificationElement = document.createElement('div');
+        notificationElement.className = 'notification';
+        notificationElement.innerHTML = `
+          <h5>${notification.title}</h5>
+          <p>${notification.message}</p>
+        `;
+        notificationsContainer.appendChild(notificationElement);
+      });
+    }
+
+    function loadOperationHistory() {
+      // Simulación de historial de operaciones
+      const operations = [
+        { date: '2025-06-01', pair: 'EUR/USD', result: 'Ganancia', profitLoss: '+$150' },
+        { date: '2025-06-02', pair: 'GBP/USD', result: 'Pérdida', profitLoss: '-$50' },
+        { date: '2025-06-03', pair: 'USD/JPY', result: 'Ganancia', profitLoss: '+$200' },
+      ];
+
+      const operationHistory = document.getElementById('operationHistory');
+      operationHistory.innerHTML = '';
+      operations.forEach(operation => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${operation.date}</td>
+          <td>${operation.pair}</td>
+          <td>${operation.result}</td>
+          <td>${operation.profitLoss}</td>
+        `;
+        operationHistory.appendChild(row);
+      });
+    }
+
+    document.getElementById('closeSessionBtn').addEventListener('click', function () {
+      const operations = [
+        { date: '2025-06-01', pair: 'EUR/USD', result: 'Ganancia', profitLoss: '+$150' },
+        { date: '2025-06-02', pair: 'GBP/USD', result: 'Pérdida', profitLoss: '-$50' },
+        { date: '2025-06-03', pair: 'USD/JPY', result: 'Ganancia', profitLoss: '+$200' },
+      ];
+
+      const today = new Date().toISOString().split('T')[0];
+      const accountBalance = 10000; // Simulación del balance de la cuenta
+
+      let totalProfitLoss = 0;
+
+      operations.forEach(operation => {
+        if (operation.date === today) {
+          const value = parseFloat(operation.profitLoss.replace('$', ''));
+          totalProfitLoss += value;
+        }
+      });
+
+      const percentageChange = ((totalProfitLoss / accountBalance) * 100).toFixed(2);
+
+      alert(`Resumen del día:\nGanancia/Pérdida Total: $${totalProfitLoss.toFixed(2)}\nCambio porcentual: ${percentageChange}%`);
+    });
+  </script>
+</body>
+</html>

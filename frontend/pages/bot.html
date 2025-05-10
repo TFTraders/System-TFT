@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bot Automatizado - Training for Traders</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome for icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #081625;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #750e25;
+      margin-bottom: 20px;
+    }
+
+    .metric-card {
+      background: #1a202c;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .metric-card h4 {
+      color: #750e25;
+    }
+
+    .btn-primary {
+      background-color: #750e25;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #ffffff;
+      color: #750e25;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <img src="../assets/images/logo.png" alt="Training for Traders" width="120">
+        <strong>Training for Traders</strong>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="../pages/planes.html">Planes</a></li>
+          <li class="nav-item"><a class="nav-link" href="../pages/auditoria.html">Auditoría</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <div class="container">
+    <h1 class="text-center mb-4">Bot Automatizado (BOV)</h1>
+
+    <!-- Fechas de Inscripción y Caducidad -->
+    <div class="section">
+      <h2>Fechas de Inscripción y Caducidad</h2>
+      <p id="startDate">Fecha de inscripción: <strong>2025-01-01</strong></p>
+      <p id="expirationDate">Fecha de caducidad: <strong>2025-12-31</strong></p>
+    </div>
+
+    <!-- Métricas -->
+    <div class="section">
+      <h2>Métricas del Bot</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="metric-card">
+            <h4>ROI</h4>
+            <p id="roi">15%</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="metric-card">
+            <h4>Drawdown</h4>
+            <p id="drawdown">5%</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="metric-card">
+            <h4>Winrate</h4>
+            <p id="winrate">60%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuraciones -->
+    <div class="section">
+      <h2>Configuraciones del Bot</h2>
+      <p>Administra las cuentas matriz y las cuentas copy para el bot automatizado.</p>
+      <a href="bot-admin.html" class="btn btn-primary">Ir a Configuración de Cuentas</a>
+    </div>
+
+    <!-- Controles del Bot -->
+    <div class="section">
+      <h2>Controles del Bot</h2>
+      <div class="d-flex gap-3">
+        <button class="btn btn-success" onclick="startBot()">Iniciar Bot</button>
+        <button class="btn btn-warning" onclick="pauseBot()">Pausar Bot</button>
+        <button class="btn btn-danger" onclick="restartBot()">Reiniciar Bot</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      loadBotData();
+    });
+
+    function loadBotData() {
+      // Simulación de datos del backend
+      const botData = {
+        startDate: '2025-01-01',
+        expirationDate: '2025-12-31',
+        roi: '15%',
+        drawdown: '5%',
+        winrate: '60%',
+      };
+
+      // Actualizar fechas
+      document.getElementById('startDate').innerHTML = `Fecha de inscripción: <strong>${botData.startDate}</strong>`;
+      document.getElementById('expirationDate').innerHTML = `Fecha de caducidad: <strong>${botData.expirationDate}</strong>`;
+
+      // Actualizar métricas
+      document.getElementById('roi').textContent = botData.roi;
+      document.getElementById('drawdown').textContent = botData.drawdown;
+      document.getElementById('winrate').textContent = botData.winrate;
+    }
+
+    function startBot() {
+      alert('El bot ha sido iniciado.');
+      // Aquí se puede agregar lógica para iniciar el bot
+    }
+
+    function pauseBot() {
+      alert('El bot ha sido pausado.');
+      // Aquí se puede agregar lógica para pausar el bot
+    }
+
+    function restartBot() {
+      alert('El bot ha sido reiniciado.');
+      // Aquí se puede agregar lógica para reiniciar el bot
+    }
+  </script>
+</body>
+</html>

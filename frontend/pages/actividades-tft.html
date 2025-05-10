@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades - Alumno TFT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .dashboard {
+            padding: 2rem;
+        }
+
+        .card {
+            background: #2c2c2c;
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #750e25;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff;
+            color: #750e25;
+        }
+
+        footer {
+            background: #1e1e1e;
+            color: #aaa;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="alumnos-tft.html">TFT - Alumno</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="alumnos-tft.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Actividades</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <h2>Actividades - Alumno TFT</h2>
+
+        <!-- Lista de Actividades -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Actividades Asignadas</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">📄 Actividad 1: Ejercicio de Álgebra - <span class="text-warning">Pendiente</span></li>
+                            <li class="list-group-item">📄 Actividad 2: Análisis de Casos - <span class="text-success">Completada</span></li>
+                            <li class="list-group-item">📄 Actividad 3: Estrategias de Trading - <span class="text-danger">En Progreso</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enviar Actividad -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Enviar Actividad</h5>
+                        <form id="activityForm">
+                            <div class="mb-3">
+                                <label for="activityFile" class="form-label">Subir Archivo</label>
+                                <input type="file" id="activityFile" class="form-control" multiple>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="sendActivity()">Enviar Actividad</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historial de Actividades -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Historial de Actividades</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">📄 Actividad 1: Ejercicio de Álgebra - <span class="text-success">Calificación: 90%</span></li>
+                            <li class="list-group-item">📄 Actividad 2: Análisis de Casos - <span class="text-success">Calificación: 85%</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Training for Traders</p>
+    </footer>
+
+    <script>
+        function sendActivity() {
+            const files = document.getElementById('activityFile').files;
+            if (files.length === 0) {
+                alert('Por favor, selecciona al menos un archivo.');
+                return;
+            }
+
+            // Simulación de envío de actividad al backend
+            const activityData = new FormData();
+            Array.from(files).forEach(file => activityData.append('files', file));
+
+            fetch('https://www.trainingfortraders.vip/api/activities', {
+                method: 'POST',
+                body: activityData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Actividad enviada correctamente.');
+                console.log('Respuesta del servidor:', data);
+            })
+            .catch(error => {
+                console.error('Error al enviar la actividad:', error);
+                alert('Hubo un error al enviar la actividad.');
+            });
+        }
+    </script>
+</body>
+</html>

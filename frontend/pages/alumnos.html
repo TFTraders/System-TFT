@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Alumnos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        .dashboard {
+            padding: 2rem;
+        }
+
+        .card {
+            background: #2c2c2c;
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link:hover {
+            color: #750e25 !important;
+        }
+
+        footer {
+            background: #1e1e1e;
+            color: #aaa;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">TFT - Alumnos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="masters.html">Panel de Masters</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Gestión de Alumnos</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <h2>Gestión de Alumnos</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Lista de Alumnos</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Carlos Méndez</li>
+                            <li class="list-group-item">Laura Gómez</li>
+                            <li class="list-group-item">Diego Ramírez</li>
+                            <li class="list-group-item">María López</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Progreso de los Alumnos</h5>
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Training for Traders</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
+                    datasets: [{
+                        label: 'Progreso (%)',
+                        data: [75, 80, 85, 90, 95],
+                        borderColor: '#750e25',
+                        backgroundColor: 'rgba(117, 14, 37, 0.5)',
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff' // Cambiar color de las etiquetas a blanco
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#ffffff' // Cambiar color de los números del eje X a blanco
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)' // Cambiar color de las líneas del eje X a blanco translúcido
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#ffffff' // Cambiar color de los números del eje Y a blanco
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)' // Cambiar color de las líneas del eje Y a blanco translúcido
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
